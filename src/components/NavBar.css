@@ -1,0 +1,17 @@
+.navbar{
+  background: #7938e8;
+  height: 6rem;
+  left: 0;
+  padding: 0 1rem;
+  position: fixed;
+  right: 0;
+  top: 0;
+  text-align: center;
+}
+
+.navbar-brand{
+  color: white;
+  line-height: 5.5rem;
+  font-weight: 500;
+  font-size: 2rem;
+}
