@@ -12,24 +12,19 @@
 .search-button{
   background-color: #7938e8;
   color: white;
-  font-weight: 300;
+  font-weight: 500;
   width: 100%;
   border-radius: 0.25rem;
   height: 3rem;
   grid-column: 2;
+  font-size: 1.25rem;
 }
 
 .search-form{
   display: grid;
   grid-template-columns: 75% 1fr;
   grid-column-gap: 10px;
-  width: 100%;
-}
-
-.repo-container{
-  float:left;
-  width: 50%;
-  position: relative;
-  top: 8.5rem;
-  padding-left: 1.5rem;
+  width: 90%;
+  margin-top: 2.5rem;
+  margin-left: 2.5rem;
 }

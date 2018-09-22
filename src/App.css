@@ -1,0 +1,16 @@
+a.modify-list {
+  color: #7938e8;
+}
+
+a.repo-link{
+  color: black;
+  text-decoration: none;
+}
+
+.body-containers{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  top: 6rem;
+  height: 100vh;
+}
