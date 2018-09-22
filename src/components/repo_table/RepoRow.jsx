@@ -3,10 +3,10 @@ import React from 'react';
 const RepoRow = (props) => {
   return (
     <tr>
-      <td><a href="/">Shopify/Polaris</a></td>
-      <td>Liquid</td>
-      <td>v1.0.0</td>
-      <td>{props.modifier.join()}</td>
+      <td><a href={props.url}>{props.nameWithOwner}</a></td>
+      <td>{props.language}</td>
+      <td>{props.version}</td>
+      <td>{props.modifier}</td>
     </tr>
   )
 }

@@ -2,20 +2,21 @@ import React from 'react';
 import RepoTable from './RepoTable';
 import RepoRow from './RepoRow';
 
-const AllRepoRow = (props) => {
+const AllRepoRow = ({ repository }) => {
 
   return(
-    <RepoRow  name={props.name}
-              language={props.language}
-              version={props.version}
-              modifier={[<a href="/">, "Add", </a>]}/>
+    <RepoRow  nameWithOwner={repository.nameWithOwner}
+              language={repository.language}
+              version={repository.version}
+              url={repository.url}
+              modifier={<a href="/">Add</a>}/>
   )
 }
 
 const AllRepoTable = (props) => {
   const thisRepositories =  props.repositories.length > 0 ?
                             props.repositories.map((thisRepository) => {
-                              return <AllRepoRow repository={thisRepository} />
+                              return <AllRepoRow key={thisRepository.id} repository={thisRepository} />
                             }) : null;
   return (
     <RepoTable allRepositories={thisRepositories}/>

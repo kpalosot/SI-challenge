@@ -1,6 +1,11 @@
+// importing frameworks, libraries, modules
 import React, { Component } from 'react';
+import { createRequest, extractRepoInfo } from './helpers';
+
+// importing CSS
 import './App.css';
 
+// importing components
 import NavBar from './components/nav_bar/Navbar'
 import RepoContainer from './components/repo_container/RepoContainer'
 import FaveContainer from './components/fave_container/FaveContainer';
@@ -40,8 +45,15 @@ class App extends Component {
   }
 
     // TODO: request repositories from Github
-  _requestRepositories = () => {
-
+  _requestRepositories = (finalSearchKeyWord) => {
+    createRequest(finalSearchKeyWord)
+                  .catch(error => console.error(error))
+                  .then(data => {
+                    console.log(extractRepoInfo(data));
+                    this.setState({
+                      allRepositories: extractRepoInfo(data)
+                    })
+                  });
   }
 
   render() {

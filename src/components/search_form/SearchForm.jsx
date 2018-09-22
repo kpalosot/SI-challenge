@@ -10,29 +10,42 @@ class SearchForm extends Component {
     }
   }
 
+  componentDidMount(){
+    if(this.state.searchKeyWord <= 0){
+      this.props.clearRepositories();
+    }
+  }
+
+  _createRequest = () => {
+    let finalSearchKeyWord = this.state.searchKeyWord;
+    this.props.requestRepositories(finalSearchKeyWord);
+  }
+
+  _onClick = (e) => {
+    e.preventDefault();
+    this._createRequest();
+
+  }
+
   _handleKeyEvent = (e) => {
     if (e.key === 'Enter'){
-      let finalSearchKeyWord = this.state.searchKeyWord;
-      this.props.requestRepositories(finalSearchKeyWord);
+      this._createRequest();
     }
   }
 
   _onTextChange = (e) => {
-    if(this.state.searchKeyWord.length <= 0){
-      this.props.clearRepositories();
-    } else {
-      this.setState({
-        searchKeyWord: e.target.value
-      })
-    }
+    this.setState({
+      searchKeyWord: e.target.value
+    });
+
   }
 
   render(){
     return (
-      <form className="search-form">
-        <input className="search-input" />
-        <button type="submit" className="search-button">Search</button>
-      </form>
+      <div className="search-form">
+        <input onChange={this._onTextChange} onKeyPress={this._handleKeyEvent} name="searchKeyWord" className="search-input" />
+        <button onClick={this._onClick} className="search-button">Search</button>
+      </div>
     )
   }
 }
