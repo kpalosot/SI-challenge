@@ -1,20 +1,15 @@
 import React from 'react';
 import './RepoTable.css';
-// import RepoRow from './RepoRow'
 
 const RepoTable = (props) => {
-  // const allRepositories = props.repositories.length > 0 ?
-  //                         props.repositories.map((thisRepository) => {
-  //                           return <RepoRow repository={thisRepository} />
-  //                         }) : null;
   return (
     <table>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Language</th>
-          <th>Latest tag</th>
-          <th></th>
+          <th className="col-40">Name</th>
+          <th className="col-30">Language</th>
+          <th className="col-20">Latest tag</th>
+          <th className="col-10"></th>
         </tr>
       </thead>
       <tbody>

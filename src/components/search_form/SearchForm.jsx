@@ -10,12 +10,6 @@ class SearchForm extends Component {
     }
   }
 
-  componentDidMount(){
-    if(this.state.searchKeyWord <= 0){
-      this.props.clearRepositories();
-    }
-  }
-
   _createRequest = () => {
     let finalSearchKeyWord = this.state.searchKeyWord;
     this.props.requestRepositories(finalSearchKeyWord);
@@ -33,17 +27,22 @@ class SearchForm extends Component {
     }
   }
 
+  _onKeyDown = (e) => {
+    if(e.keyCode === 8 && this.state.searchKeyWord.length === 1){
+      this.props.clearRepositories();
+    }
+  }
+
   _onTextChange = (e) => {
     this.setState({
       searchKeyWord: e.target.value
     });
-
   }
 
   render(){
     return (
       <div className="search-form">
-        <input onChange={this._onTextChange} onKeyPress={this._handleKeyEvent} name="searchKeyWord" className="search-input" />
+        <input onChange={this._onTextChange} onKeyDown={this._onKeyDown} onKeyPress={this._handleKeyEvent} name="searchKeyWord" className="search-input" />
         <button onClick={this._onClick} className="search-button">Search</button>
       </div>
     )

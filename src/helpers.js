@@ -61,7 +61,8 @@ const parseData = (repository) => {
     id: nodeInfo.id,
     nameWithOwner: nodeInfo.nameWithOwner,
     url: nodeInfo.url,
-    language: nodeInfo.primaryLanguage.name
+    language: nodeInfo.primaryLanguage.name,
+    favourite: false
   };
   if (nodeInfo.releases.edges.length > 0) {
     thisRepository.version = versionParser(nodeInfo.releases.edges[0].node.name)
@@ -79,15 +80,43 @@ const extractRepoInfo = (data) => {
   return allRepositories;
 }
 
-// const getAllRepositories = (finalSearchKeyWord) => {
-//   const query = createSearchQuery(finalSearchKeyWord);
-//   return createRequest(query)
-//             .catch(error => console.error(error))
-//             .then(data => {
-//               return extractRepoInfo(data)
-//             });
-// }
+const setFaveFlagByFaveRepositoryList = (faveRepos, allRepos) => {
+  for(let thisFaveRepo of faveRepos){
+    for(let thisRepo of allRepos){
+      if(thisFaveRepo.id === thisRepo.id){
+        thisRepo.favourite = true;
+        break;
+      }
+    }
+  }
+  return allRepos;
+}
 
+const setFaveFlagByRepoID = (faveRepoID, value, allRepos) => {
+  allRepos.forEach((thisRepo) => {
+    if(thisRepo.id === faveRepoID){
+      thisRepo.favourite = value;
+    }
+  });
+  return allRepos;
+}
 
+const getFavourite = (allRepositories, newFavouriteID) => {
+  for(let thisRepo of allRepositories){
+    if (thisRepo.id === newFavouriteID) {
+      return thisRepo;
+    }
+  }
+}
 
-export { createRequest, extractRepoInfo };
+const removeUnfaveRepo = (favouriteRepositories, repositoryID) => {
+  const result = favouriteRepositories.filter(repository => repository.id !== repositoryID);
+  return result;
+}
+
+export {  createRequest,
+          extractRepoInfo,
+          setFaveFlagByFaveRepositoryList,
+          setFaveFlagByRepoID,
+          getFavourite,
+          removeUnfaveRepo };

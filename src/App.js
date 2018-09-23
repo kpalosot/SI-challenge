@@ -1,6 +1,11 @@
 // importing frameworks, libraries, modules
 import React, { Component } from 'react';
-import { createRequest, extractRepoInfo } from './helpers';
+import {  createRequest,
+          extractRepoInfo,
+          setFaveFlagByFaveRepositoryList,
+          setFaveFlagByRepoID,
+          getFavourite,
+          removeUnfaveRepo  } from './helpers';
 
 // importing CSS
 import './App.css';
@@ -20,21 +25,25 @@ class App extends Component {
     };
   }
 
-    // TODO: also has to update the state of allRepositories
-    // to exclude the favourited repository
-  _addToFavourites = (newFavourite) => {
-    const oldFavourites = this.state.favourites;
+
+  _addToFavourites = (newFavouriteID) => {
+    const oldFavouriteRepos = this.state.favourites;
+    const newFavouriteRepo = getFavourite(this.state.allRepositories, newFavouriteID);
+    const allRepositories = setFaveFlagByRepoID(newFavouriteID, true, this.state.allRepositories);
     this.setState({
-      favourites: [...oldFavourites, newFavourite]
+      favourites: [...oldFavouriteRepos, newFavouriteRepo],
+      allRepositories
     });
+
   }
 
-    // TODO: also has to update the state of favourites
-    // to exclude the unfavourited repository
-  _addToAllRepositories = (newRepository) => {
-    const oldRepositories = this.state.allRepositories;
+
+  _removeFromFavourites = (repositoryID) => {
+    const newFaveRepos = removeUnfaveRepo(this.state.favourites, repositoryID);
+    const allRepositories = setFaveFlagByRepoID(repositoryID, false, this.state.allRepositories);
     this.setState({
-      allRepositories: [...oldRepositories, newRepository]
+      favourites: newFaveRepos,
+      allRepositories
     });
   }
 
@@ -44,16 +53,16 @@ class App extends Component {
     });
   }
 
-    // TODO: request repositories from Github
   _requestRepositories = (finalSearchKeyWord) => {
     createRequest(finalSearchKeyWord)
-                  .catch(error => console.error(error))
-                  .then(data => {
-                    console.log(extractRepoInfo(data));
-                    this.setState({
-                      allRepositories: extractRepoInfo(data)
-                    })
-                  });
+          .catch(error => console.error(error))
+          .then(data => {
+            let allRepoInfo = extractRepoInfo(data);
+            allRepoInfo = setFaveFlagByFaveRepositoryList(this.state.favourites, allRepoInfo);
+            this.setState({
+              allRepositories: allRepoInfo
+            })
+          });
   }
 
   render() {
@@ -62,10 +71,10 @@ class App extends Component {
         <NavBar />
         <div className="body-containers">
           <RepoContainer  clearRepositories={this._clearRepositories}
-                          addtoFavourites={this._addToFavourites}
+                          addToFavourites={this._addToFavourites}
                           allRepositories={this.state.allRepositories}
                           requestRepositories={this._requestRepositories} />
-          <FaveContainer  addtoAllRepositories={this._addToAllRepositories}
+          <FaveContainer  removeFromFavourites={this._removeFromFavourites}
                           favouriteRepositories={this.state.favourites} />
         </div>
       </div>

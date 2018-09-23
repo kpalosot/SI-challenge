@@ -1,18 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './FaveContainer.css'
 
-// import RepoTable from '../repo_table/RepoTable'
-import FaveRepoTable from '../repo_table/RepoTable'
+import FaveRepoTable from '../repo_table/FaveRepoTable'
 
-class FaveContainer extends Component {
-
-  render(){
-    return (
-      <div className="fave-container">
-        <FaveRepoTable repositories={this.props.favouriteRepositories}/>
-      </div>
-    )
-  }
+const FaveContainer = (props) => {
+  return (
+    <div className="fave-container">
+      <FaveRepoTable favouriteRepositories={props.favouriteRepositories}
+        removeFromFavourites={props.removeFromFavourites} />
+    </div>
+  )
 }
 
 export default FaveContainer;

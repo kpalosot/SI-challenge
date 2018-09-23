@@ -1,21 +1,35 @@
-import React from 'react';
+import React, { Component } from 'react';
 import RepoTable from './RepoTable';
 import RepoRow from './RepoRow';
 
-const FaveRepoRow = (props) => {
+class FaveRepoRow extends Component {
+  _onClickHandler = (e) => {
+    e.preventDefault();
+    this.props.removeFromFavourites(e.target.id);
+  }
 
-  return (
-    <RepoRow name={props.name}
-      language={props.language}
-      version={props.version}
-      modifier={[<a href="/">, "Remove", </a>]} />
-  )
+  render(){
+    const repository = this.props.repository;
+    const thisModifier = (<a id={repository.id} className="modify-list" onClick={this._onClickHandler}>Remove</a>);
+    return (
+      <RepoRow nameWithOwner={repository.nameWithOwner}
+        language={repository.language}
+        version={repository.version}
+        url={repository.url}
+        modifier={thisModifier} />
+    )
+  }
 }
 
 const FaveRepoTable = (props) => {
-  const thisRepositories = props.repositories.length > 0 ?
-    props.repositories.map((thisRepository) => {
-      return <FaveRepoRow repository={thisRepository} />
+  // console.log("Creating Repo table");
+  // console.log("props.favouriteRepositories.length:", props.favouriteRepositories.length)
+  const thisRepositories = (props.favouriteRepositories && props.favouriteRepositories.length) > 0 ?
+    props.favouriteRepositories.map((thisRepository) => {
+      // console.log("mapping favourite repos to FaveRepoRow")
+      return <FaveRepoRow key={thisRepository.id}
+                          repository={thisRepository}
+                          removeFromFavourites={props.removeFromFavourites}/>
     }) : null;
   return (
     <RepoTable allRepositories={thisRepositories} />
