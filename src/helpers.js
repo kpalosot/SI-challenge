@@ -46,7 +46,6 @@ async function createRequest(finalSearchKeyWord) {
 
 }
 
-//eslint-disable-next-line
 const versionParser = (versionString) => {
   const regex = /(\d+\.){1,2}\d+/g
   const matches = versionString.match(regex);
@@ -55,8 +54,6 @@ const versionParser = (versionString) => {
 
 const parseData = (repository) => {
   const nodeInfo = repository.node;
-
-  // console.log(nodeInfo.releases.edges[0].node);
   const thisRepository = {
     id: nodeInfo.id,
     nameWithOwner: nodeInfo.nameWithOwner,

@@ -1,4 +1,4 @@
-// importing frameworks, libraries, modules
+// importing frameworks, modules
 import React, { Component } from 'react';
 import {  createRequest,
           extractRepoInfo,

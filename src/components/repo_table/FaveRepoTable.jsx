@@ -22,11 +22,8 @@ class FaveRepoRow extends Component {
 }
 
 const FaveRepoTable = (props) => {
-  // console.log("Creating Repo table");
-  // console.log("props.favouriteRepositories.length:", props.favouriteRepositories.length)
   const thisRepositories = (props.favouriteRepositories && props.favouriteRepositories.length) > 0 ?
     props.favouriteRepositories.map((thisRepository) => {
-      // console.log("mapping favourite repos to FaveRepoRow")
       return <FaveRepoRow key={thisRepository.id}
                           repository={thisRepository}
                           removeFromFavourites={props.removeFromFavourites}/>
